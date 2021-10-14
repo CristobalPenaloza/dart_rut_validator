@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class RUTValidator {
-  int numbers;
-  String dv;
-  String validationErrorText;
+  late int numbers;
+  late String dv;
+  late String validationErrorText;
 
-  RUTValidator({int numbers, String dv, String validationErrorText}) {
+  RUTValidator({int? numbers, String? dv, String? validationErrorText}) {
     this.numbers = numbers ?? 0;
     this.dv = dv?.toUpperCase() ?? '';
     this.validationErrorText = validationErrorText ?? 'RUT no válido.';
@@ -41,7 +41,8 @@ class RUTValidator {
 
   ///Valida rut en base al cálculo de
   ///su dígito verificador y formato.
-  String validator(String value) {
+  String? validator(String? value) {
+    if(value == null) return this.validationErrorText;
     value = formatFromText(value);
     try {
       this.numbers = getRutNumbers(value);
@@ -51,8 +52,7 @@ class RUTValidator {
       return this.validationErrorText;
     }
 
-    return (value == null ||
-            value.length <= 10 ||
+    return (value.length <= 10 ||
             this.numbers < 1000000 ||
             !this.isValid)
         ? this.validationErrorText
@@ -80,8 +80,7 @@ class RUTValidator {
   ///* xx.xxx.xxx-@
   ///* x.xxx.xxx-@
   static void formatFromTextController(TextEditingController controller) {
-    TextEditingValue oldValue =
-        TextEditingValue(text: deFormat(controller.text));
+    TextEditingValue oldValue = TextEditingValue(text: deFormat(controller.text));
     TextEditingValue newValue;
 
     String finalValue = (oldValue.text.length <= 8)
@@ -137,7 +136,7 @@ class _RUTValidatorUtils {
     Map<int, String> mp = {1: '.', 4: '.', 7: '-'};
 
     for (int i = 0; i < input.length; i++) {
-      if (mp.containsKey(i)) output.add(mp[i]);
+      if (mp.containsKey(i)) output.add(mp[i]!);
       output.add(input[i]);
     }
 

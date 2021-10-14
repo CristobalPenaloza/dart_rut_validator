@@ -5,7 +5,7 @@ author: Eduardo Munoz <edomun@protonmail.com>
 homepage: https://github.com/cgustav/dart_rut_validator
 
 environment:
-  sdk: ">=2.8.2 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
